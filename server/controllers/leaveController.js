@@ -117,7 +117,7 @@ export const getLeaves = async (req, res) => {
 //update leave status
 //PATCH /api/leaves/:id
 
-export const updateLeaves = async (req, res) => {
+export const updateLeavesStatus = async (req, res) => {
   try {
     const { status } = req.body;
     if (!["APPROVED", "REJECED", "PENDING"].includes(status)) {
