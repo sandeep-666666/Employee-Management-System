@@ -82,9 +82,13 @@ export const getAttendance = async (req, res) => {
       return res.status(404).json({ error: "Employee not found" });
     }
     const limit = parseInt(req.query.limit || 30);
-    const history = (await Attendance.find({ employeeId: employee._id }))
+
+    const history = await Attendance.find({
+      employeeId: employee._id,
+    })
       .sort({ date: -1 })
       .limit(limit);
+
     return res.status(200).json({
       success: true,
       message: "Attendance fetched succefully",
@@ -92,6 +96,8 @@ export const getAttendance = async (req, res) => {
       employee: { isDeleted: employee.isDeleted },
     });
   } catch (error) {
+    console.error("Get Attendance Error:", error);
+
     return res.status(500).json({
       success: false,
       message: "Failed to fetch Attendance",

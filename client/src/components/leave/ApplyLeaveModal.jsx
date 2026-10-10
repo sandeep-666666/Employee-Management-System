@@ -6,6 +6,8 @@ import {
   Send,
   X,
 } from "lucide-react";
+import api from "../../API/axios";
+import toast from "react-hot-toast";
 
 const ApplyLeaveModal = ({ open, onClose, onSuccess }) => {
   const [loading, setLoading] = useState(false);
@@ -16,6 +18,26 @@ const ApplyLeaveModal = ({ open, onClose, onSuccess }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
+
+    const formData = new FormData(e.currentTarget);
+    const data = Object.fromEntries(formData.entries());
+
+    try {
+      await api.post("/leave", data);
+      toast.success("Leave request submitted successfully");
+      onSuccess();
+      onClose();
+    } catch (err) {
+      toast.error(
+        err.response?.data?.message ||
+          err.response?.data?.error ||
+          err.message ||
+          "Failed to submit leave request",
+      );
+    } finally {
+      setLoading(false);
+    }
   };
   if (!open) return null;
 
@@ -95,14 +117,14 @@ const ApplyLeaveModal = ({ open, onClose, onSuccess }) => {
           {/* buttons */}
           <div className="flex gap-3 pt-2">
             <button
-              onClick={onclose}
+              onClick={onClose}
               type="button"
               className="btn-secondary flex-1"
             >
               Cancel
             </button>
+
             <button
-              onClick={onclose}
               type="submit"
               className="btn-primary flex-1 flex items-center justify-center gap-2"
               disabled={loading}
