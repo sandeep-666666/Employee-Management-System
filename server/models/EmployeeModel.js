@@ -12,7 +12,7 @@ const EmployeeSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    lasstName: {
+    lastName: {
       type: String,
       required: true,
     },

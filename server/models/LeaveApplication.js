@@ -8,8 +8,8 @@ const LeaveApplicationSchema = new mongoose.Schema(
       required: true,
     },
     type: {
-      type: Date,
-      enum: ["SICk", "CASUAL", "ANNUAL"],
+      type: String,
+      enum: ["SICK", "CASUAL", "ANNUAL"],
       required: true,
     },
     startDate: {
@@ -24,7 +24,7 @@ const LeaveApplicationSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    reason: {
+    status: {
       type: String,
       enum: ["PENDING", "APPROVED", "REJECTED"],
       default: "PENDING",
